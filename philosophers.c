@@ -10,8 +10,24 @@ void print_status(t_philo *philo, char *status)
     pthread_mutex_unlock(&philo->table->print_lock);
 }
 
+static void handle_one_philosopher(t_philo *philo)
+{
+    pthread_mutex_lock(philo->left_fork);
+    print_status(philo, "has taken a fork");
+    precise_sleep(philo, philo->table->time_to_die);
+    pthread_mutex_lock(&philo->table->death_lock);
+    philo->table->dead = 1;
+    pthread_mutex_unlock(&philo->table->death_lock);
+    pthread_mutex_unlock(philo->left_fork);
+}
+
 void eat(t_philo *philo)
 {
+    if (philo->table->num_philos == 1)
+    {
+        handle_one_philosopher(philo);
+        return;
+    }
     pthread_mutex_lock(philo->left_fork);
     print_status(philo, "has taken a fork");
 
@@ -21,10 +37,8 @@ void eat(t_philo *philo)
     print_status(philo, "is eating");
     pthread_mutex_lock(&philo->meal_lock);
     philo->last_meal_time = get_time();
-    pthread_mutex_unlock(&philo->meal_lock);
-
     philo->meals_eaten++;
-    // printf("Philo %d has eaten %d meals\n", philo->id, philo->meals_eaten);
+    pthread_mutex_unlock(&philo->meal_lock);
     if (philo->meals_eaten == philo->table->meals_required)
     {
         pthread_mutex_lock(&philo->table->full_lock);

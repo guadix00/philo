@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <limits.h>    
 
 typedef struct s_table t_table;
 
@@ -47,5 +48,6 @@ void start_simulation(t_table *table);
 void monitor(t_table *table);
 void clean_up(t_table *table);
 void precise_sleep(t_philo *philo, long duration);
+int arg_checker(char **argv);
 
 #endif

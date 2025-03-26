@@ -28,6 +28,7 @@ void clean_up(t_table *table)
     }
     pthread_mutex_destroy(&table->print_lock);
     pthread_mutex_destroy(&table->death_lock);
+    pthread_mutex_destroy(&table->full_lock);
     free(table->forks);
     free(table->philos);
 }
@@ -39,9 +40,9 @@ int main(int argc, char **argv)
         printf("Usage: ./philo num_philos time_to_die time_to_eat time_to_sleep [num_meals]\n");
         return (1);
     }
-    if (atoi(argv[1]) > 200)
+    if (arg_checker(argv))
     {
-        printf("too much philos\n");
+        printf("Invalid arguments\n");
         return (1);
     }
     t_table table;
