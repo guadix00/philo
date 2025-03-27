@@ -19,16 +19,16 @@ void	start_simulation(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-		if (pthread_create(&table->philos[i].thread, NULL, &routine,
-				&table->philos[i]))
+		pthread_create(&table->philos[i].thread, NULL, &routine,
+				&table->philos[i]);
 			i++;
 	}
 	monitor(table);
 	i = 0;
 	while (i < table->num_philos)
 	{
-		if (pthread_join(table->philos[i].thread, NULL))
-			i++;
+		pthread_join(table->philos[i].thread, NULL);
+		i++;
 	}
 }
 

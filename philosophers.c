@@ -99,6 +99,8 @@ void	precise_sleep(t_philo *philo, long duration)
 			return ;
 		}
 		pthread_mutex_unlock(&philo->table->death_lock);
+		if (get_time() - start >= duration)
+			break ;
 		usleep(500);
 	}
 }
