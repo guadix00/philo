@@ -6,7 +6,7 @@
 /*   By: gualvare <gualvare@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:27:35 by gualvare          #+#    #+#             */
-/*   Updated: 2025/03/26 15:04:55 by gualvare         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:21:47 by gualvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	start_simulation(t_table *table)
 	while (i < table->num_philos)
 	{
 		pthread_create(&table->philos[i].thread, NULL, &routine,
-				&table->philos[i]);
-			i++;
+			&table->philos[i]);
+		i++;
 	}
 	monitor(table);
 	i = 0;

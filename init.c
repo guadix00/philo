@@ -6,7 +6,7 @@
 /*   By: gualvare <gualvare@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:45:54 by gualvare          #+#    #+#             */
-/*   Updated: 2025/03/26 14:53:16 by gualvare         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:13:37 by gualvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ void	init_philosophers(t_table *table)
 		table->philos[i].left_fork = &table->forks[i];
 		table->philos[i].right_fork = &table->forks[(i + 1)
 			% table->num_philos];
+		if (table->philos[i].id % 2 == 0)
+		{
+			table->philos[i].right_fork = &table->forks[i];
+			table->philos[i].left_fork = &table->forks[(i + 1)
+				% table->num_philos];
+		}
 		table->philos[i].table = table;
 		pthread_mutex_init(&table->philos[i].meal_lock, NULL);
 		i++;
